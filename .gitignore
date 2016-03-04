@@ -39,3 +39,6 @@ local.properties
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# API Keys
+*.apikey
