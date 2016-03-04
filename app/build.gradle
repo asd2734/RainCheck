@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.0"
 
     defaultConfig {
-        applicationId "alex.com.raincheck"
+        applicationId "com.alex.raincheck"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1

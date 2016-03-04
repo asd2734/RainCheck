@@ -1,4 +1,4 @@
-package alex.com.raincheck;
+package com.alex.raincheck;
 
 import org.junit.Test;
 
