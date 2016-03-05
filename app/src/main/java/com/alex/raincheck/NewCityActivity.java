@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class NewCityActivity extends AppCompatActivity {
+    static final String LOG_TAG = NewCityActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

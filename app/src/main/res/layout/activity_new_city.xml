@@ -9,4 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.alex.raincheck.NewCityActivity">
 
+    <include layout="@layout/content_new_city" />
+
 </RelativeLayout>

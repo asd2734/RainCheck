@@ -13,7 +13,7 @@ public class LocalStorage {
 
     public static String getRootPath() { return ROOTPATH; }
 
-    public static ArrayList<String> listRecordings() {
+    public static ArrayList<String> listCities() {
         ArrayList< String > cityList = new ArrayList< String >();
         File dir = new File(ROOTPATH);
         if (!dir.exists()) {

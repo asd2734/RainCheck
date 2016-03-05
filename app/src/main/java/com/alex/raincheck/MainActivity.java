@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.alex.raincheck.utils.CityListAdapter;
+import com.alex.raincheck.utils.LocalStorage;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -73,7 +76,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateCityList() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCityList();
+    }
 
+    private void updateCityList() {
+        cityList = LocalStorage.listCities();
+        cityListView.setAdapter(new CityListAdapter(this, cityList));
     }
 }
