@@ -1,7 +1,6 @@
 package com.alex.raincheck.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,7 @@ import android.widget.TextView;
 
 import com.alex.raincheck.R;
 
-import org.json.JSONObject;
-
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class CityListAdapter extends BaseAdapter {
@@ -29,6 +27,7 @@ public class CityListAdapter extends BaseAdapter {
         TextView cityTempHigh;
         TextView cityTempLow;
         TextView cityHumidity;
+        WeakReference<GetCurrentWeatherTask> taskReference;
     }
 
     public CityListAdapter(Context context, ArrayList<String> recordingTitles) {
@@ -52,20 +51,8 @@ public class CityListAdapter extends BaseAdapter {
             holder.cityTempLow = (TextView) convertView.findViewById(R.id.cityTempLow);
             holder.cityHumidity = (TextView) convertView.findViewById(R.id.cityHumidity);
 
-            HttpWeather cityWeather = new HttpWeather(cityNames.get(position));
-            try {
-                JSONObject cityWeatherJSON = new JSONObject(cityWeather.getCurrentWeatherJSON());
-                // Temperature and humidity data are under "main"
-                JSONObject mainJSON = cityWeatherJSON.getJSONObject("main");
-                // Temperatures in JSON are in Kelvins
-                int temp = (int) (Double.parseDouble(mainJSON.getString("temp")) - 273.15);
-                int tempHigh = (int) (Double.parseDouble(mainJSON.getString("temp_max")) - 273.15);
-                int tempLow = (int) (Double.parseDouble(mainJSON.getString("temp_min")) - 273.15);
-                int humid = Integer.parseInt(mainJSON.getString("humidity"));
-
-            } catch (Exception e) {
-                Log.e(LOG_TAG, "JSON parse error", e);
-            }
+            GetCurrentWeatherTask cityWeatherTask = new GetCurrentWeatherTask(convertView);
+            cityWeatherTask.execute(cityNames.get(position));
 
 
             convertView.setTag(holder);

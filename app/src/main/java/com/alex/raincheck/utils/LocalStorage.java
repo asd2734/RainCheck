@@ -1,10 +1,13 @@
 package com.alex.raincheck.utils;
 
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class LocalStorage {
     static final String LOG_TAG = LocalStorage.class.getName();
@@ -20,11 +23,18 @@ public class LocalStorage {
             dir.mkdirs();
         }
 
-        File[] files = dir.listFiles();
-        for(File file : files){
-            if(file.isDirectory()){
-                cityList.add(file.getName());
+        File file = new File(ROOTPATH + "/cities.txt");
+        try {
+            if (file.exists()) {
+                Scanner sc = new Scanner(file);
+                while (sc.hasNextLine()) {
+                    cityList.add(sc.nextLine());
+                }
+            } else {
+                file.createNewFile();
             }
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "IO exception", e);
         }
 
         Collections.sort(cityList);
