@@ -90,10 +90,10 @@ public class GetCurrentWeatherTask extends AsyncTask<String, Void, String>{
                 TextView cityHumidity = (TextView) view.findViewById(R.id.cityHumidity);
                 ImageView cityWeatherIcon = (ImageView) view.findViewById(R.id.cityWeatherIcon);
 
-                cityTemp.setText(Integer.toString(temp));
-                cityTempHigh.setText(Integer.toString(tempHigh));
-                cityTempLow.setText(Integer.toString(tempLow));
-                cityHumidity.setText(Integer.toString(humid));
+                cityTemp.setText(temp + "\u2103");
+                cityTempHigh.setText("  " + tempHigh + "\u2103");
+                cityTempLow.setText(tempLow + "\u2103" + "  ");
+                cityHumidity.setText(humid + "%");
 
                 /*  The "id" parameter in the JSON object outlines certain weather conditions, and
                  *  ultimately determines the icon to be displayed.
