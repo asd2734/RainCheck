@@ -9,7 +9,7 @@
     tools:showIn="@layout/activity_new_city" >
 
     <EditText
-        android:id="@+id/cityNameSearch"
+        android:id="@+id/citySearchQuery"
         android:hint="City Name"
         android:maxLength="127"
         android:layout_width="match_parent"

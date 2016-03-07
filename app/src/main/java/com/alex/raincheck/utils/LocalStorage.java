@@ -16,8 +16,8 @@ public class LocalStorage {
 
     public static String getRootPath() { return ROOTPATH; }
 
-    public static ArrayList<String> listCities() {
-        ArrayList< String > cityList = new ArrayList< String >();
+    public static ArrayList< Integer > listCities() {
+        ArrayList< Integer > cityList = new ArrayList< Integer >();
         File dir = new File(ROOTPATH);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -28,7 +28,7 @@ public class LocalStorage {
             if (file.exists()) {
                 Scanner sc = new Scanner(file);
                 while (sc.hasNextLine()) {
-                    cityList.add(sc.nextLine());
+                    cityList.add(Integer.parseInt(sc.nextLine()));
                 }
             } else {
                 file.createNewFile();

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     static final String LOG_TAG = MainActivity.class.getName();
 
     private ListView cityListView;
-    private ArrayList< String > cityList;
+    private ArrayList< Integer > cityList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

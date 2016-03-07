@@ -17,7 +17,7 @@ public class CityListAdapter extends BaseAdapter {
     static final String LOG_TAG = CityListAdapter.class.getName();
 
     private Context context;
-    private ArrayList<String> cityNames;
+    private ArrayList< Integer > cityIDs;
     private LayoutInflater inflater;
 
     private class ViewHolder {
@@ -27,12 +27,12 @@ public class CityListAdapter extends BaseAdapter {
         TextView cityTempHigh;
         TextView cityTempLow;
         TextView cityHumidity;
-        WeakReference<GetCurrentWeatherTask> taskReference;
+        WeakReference< GetCurrentWeatherTask > taskReference;
     }
 
-    public CityListAdapter(Context context, ArrayList<String> recordingTitles) {
+    public CityListAdapter(Context context, ArrayList< Integer > cityIDs) {
         this.context = context;
-        this.cityNames = recordingTitles;
+        this.cityIDs = cityIDs;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -44,7 +44,6 @@ public class CityListAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
             holder.cityName = (TextView) convertView.findViewById(R.id.cityName);
-            holder.cityName.setText(cityNames.get(position));
             holder.cityWeatherIcon = (ImageView) convertView.findViewById(R.id.cityWeatherIcon);
             holder.cityTemp = (TextView) convertView.findViewById(R.id.cityTemp);
             holder.cityTempHigh = (TextView) convertView.findViewById(R.id.cityTempHigh);
@@ -52,7 +51,7 @@ public class CityListAdapter extends BaseAdapter {
             holder.cityHumidity = (TextView) convertView.findViewById(R.id.cityHumidity);
 
             GetCurrentWeatherTask cityWeatherTask = new GetCurrentWeatherTask(convertView);
-            cityWeatherTask.execute(cityNames.get(position));
+            cityWeatherTask.execute(cityIDs.get(position));
 
 
             convertView.setTag(holder);
@@ -65,7 +64,7 @@ public class CityListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return cityNames.size();
+        return cityIDs.size();
     }
 
     @Override
