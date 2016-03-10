@@ -1,9 +1,12 @@
-package com.alex.raincheck.utils;
+package com.alex.raincheck.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ListView;
+
+import com.alex.raincheck.utils.CityTuple;
+import com.alex.raincheck.adapters.SearchListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

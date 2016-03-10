@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.alex.raincheck.utils.GetCitiesTask;
+import com.alex.raincheck.tasks.GetCitiesTask;
 import com.alex.raincheck.utils.LocalStorage;
-import com.alex.raincheck.utils.SearchListAdapter;
+import com.alex.raincheck.adapters.SearchListAdapter;
 
 public class NewCityActivity extends AppCompatActivity {
     static final String LOG_TAG = NewCityActivity.class.getName();
@@ -33,7 +33,6 @@ public class NewCityActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int cityID = ((SearchListAdapter) parent.getAdapter()).getCityTuple(position).cityID;
-                Log.e("asd", cityID+"");
                 LocalStorage.addCity(cityID);
                 Intent intent = new Intent();
                 intent.setClass(NewCityActivity.this, MainActivity.class);

@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 
-import com.alex.raincheck.utils.CityListAdapter;
+import com.alex.raincheck.adapters.CityListAdapter;
 import com.alex.raincheck.utils.LocalStorage;
 
 import java.util.ArrayList;

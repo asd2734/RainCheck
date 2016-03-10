@@ -1,4 +1,4 @@
-package com.alex.raincheck.utils;
+package com.alex.raincheck.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.alex.raincheck.R;
+import com.alex.raincheck.utils.CityTuple;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class SearchListAdapter extends BaseAdapter {

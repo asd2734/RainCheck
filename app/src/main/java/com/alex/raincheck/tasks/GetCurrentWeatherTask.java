@@ -1,4 +1,4 @@
-package com.alex.raincheck.utils;
+package com.alex.raincheck.tasks;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -16,33 +16,33 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by alex on 3/6/16.
+/*
+ * Class used to simplify fetching weather data
  */
-public class GetForecastTask extends AsyncTask<String, Void, String> {
-    static final String LOG_TAG = GetForecastTask.class.getName();
+public class GetCurrentWeatherTask extends AsyncTask<Integer, Void, String>{
+    static final String LOG_TAG = GetCurrentWeatherTask.class.getName();
 
-    private static String PREFIX = "http://api.openweathermap.org/data/2.5/forecast?q=";
-    private static String SUFFIX = "&mode=json&appid=44db6a862fba0b067b1930da0d769e98"; // The API key should really be hidden, but is kept here for the sake of portability/demo-ability
+    private static String PREFIX = "http://api.openweathermap.org/data/2.5/weather?id=";
+    private static String SUFFIX = "&appid=44db6a862fba0b067b1930da0d769e98"; // The API key should really be hidden, but is kept here for the sake of portability/demo-ability
 
     private WeakReference< View > viewReference;
-    private String cityName;
+    private int cityID;
 
-    public GetForecastTask(View view) {
+    public GetCurrentWeatherTask(View view) {
         super();
         this.viewReference = new WeakReference< View >(view);
     }
 
-    public String getForecastJSON() {
+    public String getCurrentWeatherJSON() {
         HttpURLConnection con;
 
         // Refreshes up to 10 times on response error
         for (int refreshCount = 0; refreshCount < 10; refreshCount++) {
             try {
-                con = (HttpURLConnection) (new URL(PREFIX + cityName + SUFFIX)).openConnection();
+                con = (HttpURLConnection) (new URL(PREFIX + cityID + SUFFIX)).openConnection();
                 con.setRequestMethod("GET");
                 con.setDoInput(true);
-                con.setDoOutput(true);
+                con.setDoOutput(false);
                 con.connect();
 
                 StringBuffer buffer = new StringBuffer();
@@ -54,7 +54,7 @@ public class GetForecastTask extends AsyncTask<String, Void, String> {
                 br.close();
                 return buffer.toString();
             } catch (Exception e) {
-                Log.e(LOG_TAG, "Forecast HTTP GET error", e);
+                Log.e(LOG_TAG, "Current weather HTTP GET error", e);
             }
         }
 
@@ -62,9 +62,9 @@ public class GetForecastTask extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... cityParam) {
-        this.cityName = cityParam[0];
-        return getForecastJSON();
+    protected String doInBackground(Integer... cityParam) {
+        this.cityID = cityParam[0];
+        return getCurrentWeatherJSON();
     }
 
     @Override
@@ -76,23 +76,27 @@ public class GetForecastTask extends AsyncTask<String, Void, String> {
                 // Temperature and humidity data are under "main"
                 JSONObject mainJSON = cityWeatherJSON.getJSONObject("main");
                 JSONObject weatherJSON = cityWeatherJSON.getJSONArray("weather").getJSONObject(0);
+
+                String cityNameString = cityWeatherJSON.getString("name");
                 // Temperatures in JSON are in Kelvins
                 int temp = (int) (Double.parseDouble(mainJSON.getString("temp")) - 273.15);
                 int tempHigh = (int) (Double.parseDouble(mainJSON.getString("temp_max")) - 273.15);
                 int tempLow = (int) (Double.parseDouble(mainJSON.getString("temp_min")) - 273.15);
-                int humid = Integer.parseInt(mainJSON.getString("humidity"));
-                int weatherCode = Integer.parseInt(weatherJSON.getString("id"));
+                int humid = mainJSON.getInt("humidity");
+                int weatherCode = weatherJSON.getInt("id");
 
+                TextView cityName = (TextView) view.findViewById(R.id.cityName);
                 TextView cityTemp = (TextView) view.findViewById(R.id.cityTemp);
                 TextView cityTempHigh = (TextView) view.findViewById(R.id.cityTempHigh);
                 TextView cityTempLow = (TextView) view.findViewById(R.id.cityTempLow);
                 TextView cityHumidity = (TextView) view.findViewById(R.id.cityHumidity);
                 ImageView cityWeatherIcon = (ImageView) view.findViewById(R.id.cityWeatherIcon);
 
-                cityTemp.setText(Integer.toString(temp));
-                cityTempHigh.setText(Integer.toString(tempHigh));
-                cityTempLow.setText(Integer.toString(tempLow));
-                cityHumidity.setText(Integer.toString(humid));
+                cityName.setText(cityNameString);
+                cityTemp.setText(temp + "\u2103");
+                cityTempHigh.setText("  " + tempHigh + "\u2103");
+                cityTempLow.setText(tempLow + "\u2103" + "  ");
+                cityHumidity.setText(humid + "%");
 
                 /*  The "id" parameter in the JSON object outlines certain weather conditions, and
                  *  ultimately determines the icon to be displayed.

@@ -1,4 +1,4 @@
-package com.alex.raincheck.utils;
+package com.alex.raincheck.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alex.raincheck.R;
+import com.alex.raincheck.tasks.GetCurrentWeatherTask;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class CityListAdapter extends BaseAdapter {
         TextView cityTempHigh;
         TextView cityTempLow;
         TextView cityHumidity;
-        WeakReference< GetCurrentWeatherTask > taskReference;
+        WeakReference<GetCurrentWeatherTask> taskReference;
     }
 
     public CityListAdapter(Context context, ArrayList< Integer > cityIDs) {
