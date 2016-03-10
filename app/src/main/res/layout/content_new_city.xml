@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     tools:context="com.alex.raincheck.NewCityActivity"
-    tools:showIn="@layout/activity_new_city" >
+    tools:showIn="@layout/activity_new_city">
 
+    <!-- length of the longest city name without a short form is 44 (Tweebuffelsmeteenskootmorsdoodgeskietfontein) -->
     <EditText
-        android:id="@+id/citySearchQuery"
+        android:id="@+id/citySearchBar"
         android:hint="City Name"
-        android:maxLength="127"
+        android:maxLength="44"
+        android:imeOptions="actionSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:inputType="textCapWords"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:id="@+id/citySearchList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/citySearchBar"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </RelativeLayout>

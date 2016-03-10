@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 
 import com.alex.raincheck.utils.CityListAdapter;
 import com.alex.raincheck.utils.LocalStorage;
@@ -29,17 +30,33 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         cityListView = (ListView) findViewById(R.id.cityList);
-        cityListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        cityListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // tapping on a city for more detailed weather info
                 Intent intent = new Intent();
 
             }
+        });
+        cityListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                PopupMenu editDelete = new PopupMenu(MainActivity.this, view);
+                editDelete.getMenuInflater().inflate(R.menu.menu_popup_city, editDelete.getMenu());
+                editDelete.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getTitle().equals("Delete")) {
+                            LocalStorage.removeCity(position);
+                            updateCityList();
+                        }
 
+                        return true;
+                    }
+                });
+
+                editDelete.show();
+                return true;
             }
         });
 

@@ -3,11 +3,7 @@ package com.alex.raincheck.utils;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import com.alex.raincheck.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,9 +15,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by alex on 3/6/16.
- */
 public class GetCitiesTask extends AsyncTask<String, Void, String> {
     static final String LOG_TAG = GetCitiesTask.class.getName();
 
@@ -82,15 +75,18 @@ public class GetCitiesTask extends AsyncTask<String, Void, String> {
                 // Temperature and humidity data are under "main"
                 JSONArray cityJSONList = cityWeatherJSON.getJSONArray("list");
 
-                ArrayList<CityNameIDPair> cityNameIDPairs = new ArrayList<CityNameIDPair>();
+                ArrayList<CityTuple> cityTuples = new ArrayList<CityTuple>();
 
                 for (int i = 0; i < cityJSONList.length(); i++) {
                     JSONObject cityObject = cityJSONList.getJSONObject(i);
-                    CityNameIDPair pair = new CityNameIDPair(cityObject.getInt("id"), cityObject.getString("name"));
-                    cityNameIDPairs.add(pair);
+                    JSONObject sysObject = cityObject.getJSONObject("sys"); // holds country info
+                    CityTuple tuple = new CityTuple(cityObject.getInt("id"), cityObject.getString("name"), sysObject.getString("country"));
+                    cityTuples.add(tuple);
                 }
 
-                listView.setAdapter(new SearchListAdapter(context, cityNameIDPairs));
+                SearchListAdapter listAdapter = new SearchListAdapter(context, cityTuples);
+                listView.setAdapter(listAdapter);
+                listAdapter.notifyDataSetChanged();
             } catch (Exception e) {
                 Log.e(LOG_TAG, "JSON parse error", e);
             }
