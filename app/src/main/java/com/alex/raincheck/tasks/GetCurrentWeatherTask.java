@@ -23,7 +23,7 @@ public class GetCurrentWeatherTask extends AsyncTask<Integer, Void, String>{
     static final String LOG_TAG = GetCurrentWeatherTask.class.getName();
 
     private static String PREFIX = "http://api.openweathermap.org/data/2.5/weather?id=";
-    private static String SUFFIX = "&appid=44db6a862fba0b067b1930da0d769e98"; // The API key should really be hidden, but is kept here for the sake of portability/demo-ability
+    private static String SUFFIX = "&appid=928ba8e8e9c9025abb544ff60b861c2a"; // The API key should really be hidden, but is kept here for the sake of portability/demo-ability
 
     private WeakReference< View > viewReference;
     private int cityID;

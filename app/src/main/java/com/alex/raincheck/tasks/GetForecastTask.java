@@ -23,7 +23,7 @@ public class GetForecastTask extends AsyncTask<String, Void, String> {
     static final String LOG_TAG = GetForecastTask.class.getName();
 
     private static String PREFIX = "http://api.openweathermap.org/data/2.5/forecast?q=";
-    private static String SUFFIX = "&mode=json&appid=44db6a862fba0b067b1930da0d769e98"; // The API key should really be hidden, but is kept here for the sake of portability/demo-ability
+    private static String SUFFIX = "&mode=json&appid=928ba8e8e9c9025abb544ff60b861c2a"; // The API key should really be hidden, but is kept here for the sake of portability/demo-ability
 
     private WeakReference< View > viewReference;
     private String cityName;
